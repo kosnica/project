@@ -1,0 +1,89 @@
+<div class="col-md-12 note-contener">
+
+    <div ng-switch=$ctrl.appCtrl.notesView>
+        <div ng-switch-default>
+            <div class="col-md-12 kap dns-margin-gap">
+                <p>NOTES</p>
+                <div class="btn btn-success btn-round dns-button" ng-click="$ctrl.openModal()">New note</div>
+            </div>
+            <div class="col-md-12 kap dns-margin-gap">
+                <div ng-repeat="item in $ctrl.items"  class="panel panel-default dns-margin-gap dns-respons-cards notecolor-{{item.color}}" ng-switch=item.type>
+                    <div ng-switch-when="notes">
+                        <div class="col-md-12 panel-heading">
+                            {{item.title}}
+                        </div>
+                        <div class="panel-body">
+                            <div>{{item.note}}</div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="images">
+                        <div class="panel-body">
+                            <img style="width: 100%" ng-src="{{item.note}}"  />
+                        </div>
+                    </div>
+                    <div ng-switch-when="link">
+                        <div class="panel-body">
+                            <div>
+                                {{item.note}}
+                                <a ng-href="{{item.note}}" target="_blank"><i class="icon icon-new-tab"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span ng-if="item.type !== 'images'">
+                            <span ng-mouseover="popoverIsOpen = true" ng-mouseleave="popoverIsOpen = false">
+                            <span tooltip-placement="bottom" uib-tooltip="Change color" class="icon icon-color" popover-is-open="popoverIsOpen" uib-popover-template="$ctrl.popoverContent.templateUrl"></span>
+                        </span>
+                        </span>
+                        <span tooltip-placement="bottom" uib-tooltip="Edit note" class="icon icon-edit" ng-click="$ctrl.editModal(item.id)"></span>
+                        <span tooltip-placement="bottom" uib-tooltip="Delete note" class="icon icon-trash" ng-click="$ctrl.updateStatus(item.id, 'deleted')"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="none">
+            <div class="col-md-12 kap dns-margin-gap">
+                <p>NOTES</p>
+                <div>
+                    <img src="Illustrations/notes-empty-state.svg" />
+                </div>
+                <div class="btn btn-success btn-round dns-button" ng-click="$ctrl.openModal()">{{$ctrl.appCtrl.buttonLabel}}</div>
+            </div>
+        </div>
+        <div ng-switch-when="trash">
+            <div class="col-md-12 kap dns-margin-gap">
+                <p>Trash</p>
+                <div class="btn btn-success btn-round dns-button" ng-click="$ctrl.emptyTrash()">Clear Trash</div>
+            </div>
+            <div class="col-md-12 kap dns-margin-gap">
+                <div ng-repeat="item in $ctrl.items"  class="panel panel-default dns-margin-gap dns-respons-cards notecolor-{{item.color}}" ng-switch=item.type>
+                    <div ng-switch-when="notes">
+                        <div class="col-md-12 panel-heading">
+                            {{item.title}}
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                {{item.note}}
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="images">
+                        <div class="panel-body">
+                            <img style="width: 100%" ng-src="{{item.note}}"  />
+                        </div>
+                    </div>
+                    <div ng-switch-when="link">
+                        <div class="panel-body">
+                            <p> {{item.note}}</p>
+                            <a ng-href="{{item.note}}" target="_blank"><i class="icon icon-new-tab"></i></a>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="btn btn-default btn-xs" ng-click="$ctrl.removeNote(item.id)">Remove</div>
+                        <div class="btn btn-default btn-xs" ng-click="$ctrl.updateStatus(item.id, 'regular')">Send back to notes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

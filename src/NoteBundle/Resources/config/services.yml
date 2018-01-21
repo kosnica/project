@@ -1,0 +1,11 @@
+services:
+    note_listener:
+        class: NoteBundle\EventListener\NoteListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+            - { name: kernel.event_listener, event: kernel.exception }
+            - { name: kernel.event_listener, event: kernel.view }
+
+    note_service:
+        class: NoteBundle\Service\NoteService
+        arguments: ["@doctrine.orm.entity_manager"]

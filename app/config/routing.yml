@@ -1,0 +1,4 @@
+note:
+    resource: "@NoteBundle/Resources/config/routing.yml"
+    prefix:   /
+

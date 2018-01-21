@@ -1,0 +1,22 @@
+NoteBundle\Entity\NoteType:
+    type: entity
+    table: null
+    repositoryClass: NoteBundle\Repository\NoteTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }
+    fields:
+         alias:
+             type: string
+             length: 100
+         name:
+             type: string
+             length: 100
+    oneToMany:
+         note:
+            targetEntity: Note
+            mappedBy: note_type 

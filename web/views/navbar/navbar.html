@@ -1,0 +1,28 @@
+
+
+
+
+<div class="wrapper col-md-4">
+    <nav class="sidebar">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header">
+            <img src="Illustrations/note-tracker-logo.svg" />
+
+        </div>
+
+       <!-- Sidebar Links -->
+        <ul>
+            <ul class="list-unstyled components">
+                <li ng-class="{'active': ($ctrl.activeTab === 'all-notes')}">
+                    <a ng-click="$ctrl.setFilter('all-notes', 'regular');" class="icon icon-all-notes"> All notes</a>
+                </li>
+                <li ng-repeat="item in $ctrl.items" ng-class="{'active': ($ctrl.activeTab === item.alias)}" >
+                    <a ng-click="$ctrl.setFilter(item.alias, 'regular');" class="icon icon-{{item.alias}}"> {{item.name}}</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled">
+               <li ng-class="{'active': $ctrl.activeTab === 'trash'}" ng-click="$ctrl.setFilter('trash', 'deleted');" ><a class="icon icon-trash"> Trash</a></li>
+            </ul>
+        </ul>
+    </nav>
+</div>

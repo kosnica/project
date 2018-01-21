@@ -1,0 +1,63 @@
+notes:
+    path:     /notes
+    defaults: { _controller: NoteBundle:Note:index }
+    requirements:
+        _format: json
+        _method: GET
+
+get_note:
+    path:     /notes/{id}
+    defaults: { _controller: NoteBundle:Note:get }
+    requirements:
+        _format: json
+        _method: GET
+
+save_note:
+    path:     /notes
+    defaults: { _controller: NoteBundle:Note:save }
+    requirements:
+        _format: json
+        _method: POST
+
+update_note:
+    path:     /notes/{id}
+    defaults: { _controller: NoteBundle:Note:update }
+    requirements:
+        _format: json
+        _method: PUT
+
+remove_note:
+    path:     /notes/{id}
+    defaults: { _controller: NoteBundle:Note:remove }
+    requirements:
+        _format: json
+        _method: DELETE
+
+remove_all_notes:
+    path:     /notes
+    defaults: { _controller: NoteBundle:Note:removeAll }
+    requirements:
+        _format: json
+        _method: DELETE
+
+delete_note:
+    path:     /notes/{id}/updatestatus
+    defaults: { _controller: NoteBundle:Note:updateStatus }
+    requirements:
+        _format: json
+        _method: PUT
+
+color_note:
+    path:     /notes/{id}/updatecolor
+    defaults: { _controller: NoteBundle:Note:updateColor }
+    requirements:
+        _format: json
+        _method: PUT
+
+types:
+    path:     /types
+    defaults: { _controller: NoteBundle:Note:getTypes }
+    requirements:
+        _format: json
+        _method: GET
+

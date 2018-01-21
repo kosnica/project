@@ -1,0 +1,37 @@
+NoteBundle\Entity\Note:
+    type: entity
+    table: note
+    repositoryClass: NoteBundle\Repository\NoteRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    lifecycleCallbacks: {  }
+    fields:
+        type_id:
+            type: integer
+            length: 10
+        title:
+            type: string
+            length: 100
+        description:
+            type: text
+        color:
+            type: string
+            length: 100
+            options:
+                default: '#ffffff'
+        status:
+            type: string
+            length: 100
+            options:
+                default: 'regular'
+    manyToOne:
+            note_type:
+                 targetEntity: NoteType
+                 inversedBy: note
+                 joinColumn: 
+                     name: type_id
+                     referencedColumnName: id

@@ -1,0 +1,195 @@
+<?php
+
+namespace NoteBundle\Entity;
+
+/**
+ * Note
+ */
+
+class Note
+{
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var int
+     */
+    private $type_id;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var string
+     */
+    private $color = 'white';
+
+    /**
+     * @var string
+     */
+    private $status = 'regular';
+    
+     /**
+     * @var object
+     */
+    private $note_type;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * Set type_id
+     *
+     * @param integer $typeId
+     * @return Note
+     */
+    public function setTypeId($typeId)
+    {
+        $this->type_id = $typeId;
+
+        return $this;
+    }
+
+    /**
+     * Get type_id
+     *
+     * @return integer 
+     */
+    public function getTypeId()
+    {
+        return $this->type_id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Note
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Note
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     * @return Note
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return Note
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set note_type
+     *
+     * @param object $noteType
+     * @return NoteType
+     */
+    public function setNoteType($noteType)
+    {
+        $this->note_type = $noteType;
+
+        return $this;
+    }
+
+    /**
+     * Get note_type
+     *
+     * @return NoteType
+     */
+    public function getNoteType()
+    {
+        return $this->note_type;
+    }
+}
