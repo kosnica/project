@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 
 angular.module('appComponent', []);
 
@@ -9,7 +10,7 @@ component('app', {
     controller:[
         function AppController() {
 
-            var self = this;
+            const self = this;
 
             self.notesView = "none";
             self.activeTab = "all-notes";
@@ -20,7 +21,7 @@ component('app', {
                 self.notesView = value;
             };
 
-            self.setActiveTab = function(value, tabName){
+            self.setActiveTab = function(value, tabName = ""){
 
                 self.buttonLabel = "Add First " + tabName + " Note";
                 self.activeTab = value;

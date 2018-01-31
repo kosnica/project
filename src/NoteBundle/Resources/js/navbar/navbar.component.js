@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 
 angular.module('navbar', ['core.note']);
 
@@ -6,16 +7,15 @@ angular.
     module('navbar').
     component('navbar', {
         templateUrl:'views/navbar/navbar.html',
-        transclude: true,
         require: {
             appCtrl: '^app'
         },
         controller:['DataModel',
             function NavbarController(DataModel) {
 
-                var self = this;
+                const self = this;
                 self.activeTab = 'all-notes';
-                var promise = DataModel.loadTypeData();
+                const promise = DataModel.loadTypeData();
                 promise.$promise.then(function (data) {
 
                     if (data)
@@ -27,10 +27,10 @@ angular.
 
                 self.setFilter =  function(type, status) {
 
-                    var data = {status: status, type: type};
+                    const data = {status: status, type: type};
                     DataModel.setFilter(data);
 
-                    if (DataModel.filter())
+                    if (DataModel.filter() || (type === 'trash'))
                     {
                         self.appCtrl.setNotesView(type);
                     }
@@ -41,7 +41,7 @@ angular.
 
                     self.activeTab = type;
 
-                    var tabName = "";
+                    let tabName = "";
 
                     if (self.items[type])
                     {

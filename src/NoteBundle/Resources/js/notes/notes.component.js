@@ -1,4 +1,4 @@
-
+/*jshint esversion: 6 */
 angular.module('notes', ['core.note']);
 
 
@@ -6,16 +6,15 @@ angular.
 module('notes').
 component('notes', {
     templateUrl:'views/notes/notes.html',
-    transclude: true,
     require: {
         appCtrl: '^app'
     },
-    controller:['$uibModal', 'NoteService', 'DataModel',
-        function NotesController($uibModal, NoteService, DataModel) {
+    controller:['$uibModal', 'DataModel',
+        function NotesController($uibModal, DataModel) {
 
-            var self = this;
+            const self = this;
 
-            var promise = DataModel.loadData();
+            const promise = DataModel.loadData();
 
             promise.$promise.then(function (data) {
 
@@ -31,14 +30,20 @@ component('notes', {
 
             self.openModal = function (){
 
-                var modalData = {id: '', type: 'notes', title: '', note: '', strFunction: 'add'};
+                let strType = self.appCtrl.activeTab;
+                if (self.appCtrl.activeTab === 'all-notes')
+                {
+                    strType = 'notes';
+                }
+
+                const modalData = {id: '', type: strType, title: '', note: '', strFunction: 'add'};
                 setModal(modalData);
             };
 
             self.editModal = function (intNoteID){
 
-                var oneNoteData = DataModel.getOne(intNoteID);
-                var modalData = {id: intNoteID, type: oneNoteData.type, title: oneNoteData.title, note: oneNoteData.note, strFunction: 'update'};
+                const oneNoteData = DataModel.getOne(intNoteID);
+                const modalData = {id: intNoteID, type: oneNoteData.type, title: oneNoteData.title, note: oneNoteData.note, strFunction: 'update'};
                 setModal(modalData);
             };
 
@@ -89,7 +94,7 @@ component('notes', {
 
                             if (form.$valid)
                             {
-                                var objNote = {
+                                const objNote = {
                                     id: modalData.id,
                                     type: this.noteType,
                                     title: this.title,
@@ -98,12 +103,13 @@ component('notes', {
                                 };
                                 DataModel[modalData.strFunction](objNote);
                                 $uibModalInstance.close();
+                                self.appCtrl.setNotesView(self.appCtrl.activeTab);
                             }
                         };
 
                         this.isDisabled = function(item) {
 
-                            if (self.appCtrl.activeTab == item || self.appCtrl.activeTab == 'all-notes')
+                            if (self.appCtrl.activeTab === item || self.appCtrl.activeTab === 'all-notes')
                             {
                                 return false;
                             }
@@ -113,7 +119,7 @@ component('notes', {
 
                         this.isActive = function(item){
 
-                            if (this.noteType == item)
+                            if (this.noteType === item)
                             {
                                 return true;
                             }

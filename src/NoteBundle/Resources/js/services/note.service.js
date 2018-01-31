@@ -14,7 +14,7 @@ factory('NoteService', ['$resource',
                 method: 'GET',
                 isArray:true,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "notes"
@@ -23,7 +23,7 @@ factory('NoteService', ['$resource',
             get: {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "notes"
@@ -32,6 +32,7 @@ factory('NoteService', ['$resource',
             save: {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 params: {
@@ -41,6 +42,7 @@ factory('NoteService', ['$resource',
             update: {
                 method: 'PUT',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 params: {
@@ -50,7 +52,7 @@ factory('NoteService', ['$resource',
             remove: {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "notes"
@@ -60,7 +62,7 @@ factory('NoteService', ['$resource',
                 method: 'DELETE',
                 isArray:true,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "notes"
@@ -69,7 +71,7 @@ factory('NoteService', ['$resource',
             updateStatus: {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "notes",
@@ -79,6 +81,7 @@ factory('NoteService', ['$resource',
             updateColor: {
                 method: 'PUT',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 params: {
@@ -90,7 +93,7 @@ factory('NoteService', ['$resource',
             getTypes: {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 },
                 params: {
                     collection: "types"

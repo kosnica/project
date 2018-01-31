@@ -48,9 +48,9 @@ class NoteController extends Controller
         $data = $validateData->options;
 
         $noteService = $this->container->get('note_service');
-        $noteService->insertNote($data);
+        $arrNote = $noteService->insertNote($data);
 
-        $arrData = array('success'=>true);
+        $arrData = array('data'=> $arrNote);
 
         return $arrData;
     }
@@ -60,7 +60,7 @@ class NoteController extends Controller
      * @param int $id Note id
      * @param Request $request
      *
-     * @return array $arrResult with success flag
+     * @return array $arrResult Array of note properties
      */
 
     public function updateAction(Request $request, $id)
@@ -70,9 +70,9 @@ class NoteController extends Controller
         $data = $validateData->options;
 
         $noteService = $this->container->get('note_service');
-        $boolResult = $noteService->updateNote($id, $data);
+        $arrResult = $noteService->updateNote($id, $data);
 
-        $arrResult = array('success' => $boolResult);
+        $arrResult = array('data' => $arrResult);
 
         return $arrResult;
     }

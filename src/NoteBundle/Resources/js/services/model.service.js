@@ -7,10 +7,10 @@ module('core.model').
 factory('DataModel', ['NoteService', '$filter',
     function(NoteService, $filter) {
 
-        var serviceData = {};
-        var filterType = 'all-notes';
-        var filterStatus = 'regular';
-        var originalData = [];
+        const serviceData = {};
+        let filterType = 'all-notes';
+        let filterStatus = 'regular';
+        let originalData = [];
 
         serviceData.noteData = [];
         serviceData.navigation = [];
@@ -39,7 +39,7 @@ factory('DataModel', ['NoteService', '$filter',
 
         serviceData.getOne = function(id){
 
-            var oneItemData = getRecord(id);
+            const oneItemData = getRecord(id);
             return oneItemData;
         };
 
@@ -57,8 +57,12 @@ factory('DataModel', ['NoteService', '$filter',
         {
             NoteService.save(data).$promise.then(function(responseData) {
 
-                serviceData.noteData.push(data);
-                originalData.push(data);
+                const dataObj = responseData.data;
+                if(Object.keys(dataObj).length > 0)
+                {
+                    serviceData.noteData.push(dataObj);
+                    originalData.push(dataObj);
+                }
             });
 
         };
@@ -67,27 +71,34 @@ factory('DataModel', ['NoteService', '$filter',
         {
             NoteService.update({id:data.id}, data).$promise.then(function(responseData) {
 
-                updateRecords(data.id, data);
-                //filterData();
+                const dataObj = responseData.data;
+                if(Object.keys(dataObj).length > 0)
+                {
+                    updateRecords(dataObj.id, dataObj);
+                }
             });
-
         };
 
         serviceData.updateColor = function(id, color) {
 
-            NoteService.updateColor({id:id}, {color: color}).$promise.then(function(data) {
+            NoteService.updateColor({id:id}, {color: color}).$promise.then(function(responseData) {
 
-                updateRecords(id, {color: color});
-                filterData();
+                if (responseData.success)
+                {
+                    updateRecords(id, {color: color});
+                }
+
             });
         };
 
         serviceData.updateStatus = function(id, status) {
 
-            NoteService.updateStatus({id:id}, {status: status}).$promise.then(function(data) {
+            NoteService.updateStatus({id:id}, {status: status}).$promise.then(function(responseData) {
 
-                updateRecords(id, {status: status});
-                return filterData();
+                if (responseData.success)
+                {
+                    updateRecords(id, {status: status}, true);
+                }
             });
         };
 
@@ -104,7 +115,7 @@ factory('DataModel', ['NoteService', '$filter',
 
         serviceData.remove = function(id){
 
-            NoteService.remove({id: id}).$promise.then(function(data) {
+            NoteService.remove({id: id}).$promise.then(function(responseData) {
 
                 removeData(id);
             });
@@ -124,40 +135,46 @@ factory('DataModel', ['NoteService', '$filter',
 
         function getRecord(id){
 
-            var oneItemData =  serviceData.noteData.find(function(item){
-
-                return item.id === id;
-            });
+            const oneItemData =  serviceData.noteData.find(item => item.id === id);
 
             return oneItemData;
         }
 
-        function updateRecords(id, data)
+        function updateRecords(id, data, boolFilter = false)
         {
-            var index = originalData.findIndex(function(note) {
+            const index = originalData.findIndex(note => note.id === id);
 
-                return  note.id === id;
-            });
-
-            for (let alias in data)
+            for (const alias in data)
             {
                 originalData[index][alias] = data[alias];
+            }
+
+            if (boolFilter)
+            {
+                filterData();
+            }
+            else
+            {
+                const arrayIndex = serviceData.noteData.findIndex(note => note.id === id);
+
+                for (const alias in data)
+                {
+                    serviceData.noteData[arrayIndex][alias] = data[alias];
+                }
             }
         }
 
         function removeData(id)
         {
-            var index = serviceData.noteData.findIndex(function(note) {
-                return  note.id === id;
-            });
-
+            const index = serviceData.noteData.findIndex(note => note.id === id);
             serviceData.noteData.splice(index, 1);
-            originalData.splice(index, 1);
+            const arrayIndex = originalData.findIndex(note => note.id === id);
+            originalData.splice(arrayIndex, 1);
         }
 
         function filterData()
         {
-            var filteredData = [];
+            let filteredData = [];
 
             if (filterType === 'all-notes' ||  filterType === 'trash')
             {

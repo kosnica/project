@@ -36,14 +36,14 @@ class RequestValidation
 
     private function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('id' => '',
-                                     'title' => null,
-                                     'note' => '',
-                                     'color' => 'white',
+        $resolver->setDefaults(array('id'     => '',
+                                     'title'  => null,
+                                     'note'   => '',
+                                     'color'  => 'white',
                                      'status' => 'regular',
-                                     'type' => 'notes'));
+                                     'type'   => 'notes'));
 
-        $resolver->setAllowedValues(array('type' => array('notes', 'images', 'link'),
+        $resolver->setAllowedValues(array('type'   => array('notes', 'images', 'link'),
                                           'status' => array('regular', 'deleted', 'removed')));
 
         $resolver->setRequired(array('type', 'note'));
