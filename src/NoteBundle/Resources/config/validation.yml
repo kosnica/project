@@ -1,0 +1,11 @@
+NoteBundle\Entity\Note:
+    getters:
+        validFormat:
+            - 'IsTrue':
+                message: Invalid format.
+        title:
+            - NotBlank:
+        note:
+            - NotBlank:
+        status:
+            - Choice: [regular, delited, removed]

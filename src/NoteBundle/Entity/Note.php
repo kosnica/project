@@ -6,7 +6,7 @@ namespace NoteBundle\Entity;
  * Note
  */
 
-class Note
+class Note implements \JsonSerializable
 {
     /**
      * @var int
@@ -26,7 +26,7 @@ class Note
     /**
      * @var string
      */
-    private $description;
+    private $note;
 
     /**
      * @var string
@@ -71,7 +71,7 @@ class Note
     /**
      * Get type_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getTypeId()
     {
@@ -102,26 +102,26 @@ class Note
     }
 
     /**
-     * Set description
+     * Set note
      *
-     * @param string $description
+     * @param string $note
      * @return Note
      */
-    public function setDescription($description)
+    public function setNote($note)
     {
-        $this->description = $description;
+        $this->note = $note;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get note
      *
      * @return string 
      */
-    public function getDescription()
+    public function getNote()
     {
-        return $this->description;
+        return $this->note;
     }
 
     /**
@@ -191,5 +191,54 @@ class Note
     public function getNoteType()
     {
         return $this->note_type;
+    }
+
+    /**
+     * Checking if note format is valid.
+     *
+     * @return boolean
+     */
+
+    public function isValidFormat()
+    {
+        $notType = $this->getNoteType()->getAlias();
+
+        if ($notType == 'images')
+        {
+            $pattern = '/(https?:\/\/.*\.(?:png|jpg|jpeg))/';
+
+            if (!preg_match($pattern, $this->getNote()))
+            {
+                return false;
+            }
+        }
+        elseif ($notType == 'link')
+        {
+           if (!filter_var($this->getNote(), FILTER_VALIDATE_URL))
+           {
+               return false;
+           }
+        }
+
+        return true;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+                'id'      => $this->getId(),
+                'title'   => $this->getTitle(),
+                'note'    => $this->getNote(),
+                'type'    => $this->getNoteType()->getAlias(),
+                'color'   => $this->getColor(),
+                'status'  => $this->getStatus()
+        ];
     }
 }

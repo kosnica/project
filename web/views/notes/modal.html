@@ -3,35 +3,35 @@
     <div>
         <div class="modal-header">
             <span ng-repeat="item in $ctrl.navigation">
-                <a ng-class="{'dns-disable-all': $ctrl.isDisabled(item.alias), 'active': isActive(item.alias)}" ng-click="$ctrl.getType(item.alias);" class="icon icon-{{item.alias}}">{{item.name}}</a>
+                <a ng-class="{'st-modal-active-tab': $ctrl.isActive(item.alias), 'dns-disable-all': $ctrl.isDisabled(item.alias)}" ng-click="$ctrl.getType(item.alias);" class="icon icon-{{item.alias}} st-modal-icon">{{item.name}}</a>
             </span>
         </div>
         <div class="modal-body" id="modal-body">
             <div ng-switch="$ctrl.noteType">
                 <div ng-switch-default="notes">
-                    <div>
-                        <input class="input-sm" type='text' ng-model="$ctrl.title" name="title" required=""/>
+                    <div class="st-ib-margin-gap">
+                        <input type='text' ng-model="$ctrl.title" name="title" required="" placeholder="Title"/>
                         <div ng-show="form.$submitted || form.title.$touched">
                             <span ng-show="form.title.$error.required">This filed is required</span>
                         </div>
                     </div>
-                    <div>
-                        <input class="input-sm" type='text' ng-model="$ctrl.note" name="note" required="" />
+                    <div class="st-ib-margin-gap">
+                        <input type='text' ng-model="$ctrl.note" name="note" required="" placeholder="Take a note.."/>
                         <div ng-show="form.$submitted || form.note.$touched">
                             <span ng-show="form.note.$error.required">This filed is required</span>
                         </div>
                     </div>
                 </div>
-                <div ng-switch-when="images">
-                    <input type='url' ng-model="$ctrl.note" name="image" ng-pattern="$ctrl.regex" required="" />
+                <div class="st-ib-margin-gap" ng-switch-when="images">
+                    <input type='url' ng-model="$ctrl.note" name="image" ng-pattern="$ctrl.regex" required="" placeholder="Take a note.."/>
                     <div ng-show="form.$submitted || form.image.$touched">
                         <span ng-show="form.image.$error.required">This filed is required</span>
                         <span ng-show="form.image.$error.url">Invalid input</span>
                         <span ng-show="form.image.$error.pattern">Invalid input</span>
                     </div>
                 </div>
-                <div ng-switch-when="link">
-                    <input type="url" name="link" ng-model="$ctrl.note" required/>
+                <div class="st-ib-margin-gap" ng-switch-when="link">
+                    <input type="url" name="link" ng-model="$ctrl.note" required placeholder="Take a note.."/>
                     <div ng-show="form.$submitted || form.link.$touched">
                         <span ng-show="form.link.$error.required">This filed is required</span>
                         <span ng-show="form.link.$error.url">Invalid input</span>
@@ -39,9 +39,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <div ng-click="$ctrl.closeModal()" class="btn btn-default">close</div>
-            <input type="submit" ng-click="$ctrl.setNote(form)" class="btn btn-default" value="Save">
+        <div class="modal-footer st-modal-footer">
+            <input type="submit" ng-click="$ctrl.setNote(form)" class="btn btn-xs btn-success st-button-modal" value="Add A Note" />
+            <div ng-click="$ctrl.closeModal()" class="btn btn-default btn-xs st-button-modal">Cancle</div>
         </div>
     </div>
 </form>

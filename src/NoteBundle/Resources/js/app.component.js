@@ -27,5 +27,6 @@ component('app', {
                 self.activeTab = value;
             };
 
-        }]
+        }],
+    controllerAs: "$ctrl"
 });

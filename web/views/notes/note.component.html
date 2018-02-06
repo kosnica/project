@@ -1,0 +1,39 @@
+
+<div ng-switch=$ctrl.key.objNote.type class="panel panel-default dns-margin-gap dns-respons-cards notecolor-{{$ctrl.key.objNote.color}}" >
+    <div ng-switch-default>
+        <div class="col-md-12 panel-heading">
+            {{$ctrl.key.objNote.title}}
+        </div>
+        <div class="panel-body text-padding">
+            <div>{{$ctrl.key.objNote.note}}</div>
+        </div>
+    </div>
+    <div ng-switch-when="images">
+        <div class="panel-body">
+            <img class="st-note-image" ng-src="{{$ctrl.key.objNote.note}}"  />
+        </div>
+    </div>
+    <div ng-switch-when="link">
+        <div class="panel-body">
+            <div>
+                {{$ctrl.key.objNote.note}}
+                <a ng-href="{{$ctrl.key.objNote.note}}" target="_blank"><i class="icon icon-new-tab"></i></a>
+            </div>
+        </div>
+    </div>
+    <div ng-switch=$ctrl.key.active_tab>
+        <div ng-switch-default class="panel-footer">
+            <span ng-if="$ctrl.key.objNote.type !== 'images'">
+                <span ng-mouseover="popoverIsOpen = true" ng-mouseleave="popoverIsOpen = false">
+                <span tooltip-placement="bottom" uib-tooltip="Change color" class="icon icon-color" popover-is-open="popoverIsOpen" uib-popover-template="$ctrl.popoverContent.templateUrl"></span>
+            </span>
+            </span>
+            <span tooltip-placement="bottom" uib-tooltip="Edit note" class="icon icon-edit" ng-click="$ctrl.editModal($ctrl.key.objNote.id)"></span>
+            <span tooltip-placement="bottom" uib-tooltip="Delete note" class="icon icon-trash" ng-click="$ctrl.updateStatus($ctrl.key.objNote.id, 'deleted')"></span>
+        </div>
+        <div ng-switch-when="trash" class="panel-footer">
+            <a class="btn-text" ng-click="$ctrl.updateStatus($ctrl.key.objNote.id, 'regular')">Send back to Notes</a> |
+            <a class="btn-text" ng-click="$ctrl.removeNote($ctrl.key.objNote.id)">Remove</a>
+        </div>
+    </div>
+</div>

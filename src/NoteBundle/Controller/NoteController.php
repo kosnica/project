@@ -2,9 +2,12 @@
 
 namespace NoteBundle\Controller;
 
+use NoteBundle\Form\NoteType;
+use NoteBundle\Entity\Note;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use NoteBundle\Validation\RequestValidation;
+use Symfony\Component\Validator\Exception\ValidatorException;
 
 class NoteController extends Controller
 {
@@ -15,28 +18,26 @@ class NoteController extends Controller
 
     public function indexAction()
     {
-        $noteService = $this->container->get('note_service');
-        $arrData = $noteService->getAllNotes();
-
-        return $arrData;
+        return $this->container->get('note_service')->getAllNotes();
     }
 
     /**
-     * @param int $id Note id
+     * @param Note $note
      *
      * @return array $arrData Array of note properties
+     *
+     * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function getAction($id)
+    public function getAction(Note $note)
     {
-        $noteService = $this->container->get('note_service');
-        $arrData = $noteService->getOneNote($id);
-
-        return $arrData;
+        return $note;
     }
 
     /**
      * @param Request $request
+     *
+     * @throws ValidatorException
      *
      * @return array $arrData Array of note properties
      */
@@ -44,77 +45,79 @@ class NoteController extends Controller
     public function saveAction(Request $request)
     {
         $requestData = $request->request->all();
-        $validateData = new RequestValidation($requestData);
-        $data = $validateData->options;
-
         $noteService = $this->container->get('note_service');
-        $arrNote = $noteService->insertNote($data);
+        $requestData['note_type'] = $noteService->setNoteType($requestData['type']);
 
-        $arrData = array('data'=> $arrNote);
+        $form = $this->createForm(NoteType::class);
+        $form->submit($requestData);
 
-        return $arrData;
+        if ($form->isValid())
+        {
+            $noteService->flushNote($form->getData());
+            return $form->getData();
+        }
+
+        throw new ValidatorException($form->getErrors(true));
     }
 
-
     /**
-     * @param int $id Note id
      * @param Request $request
+     * @param Note $note
      *
      * @return array $arrResult Array of note properties
+     * @throws ValidatorException
+     *
+     * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, Note $note)
     {
         $requestData = $request->request->all();
-        $validateData = new RequestValidation($requestData);
-        $data = $validateData->options;
-
         $noteService = $this->container->get('note_service');
-        $arrResult = $noteService->updateNote($id, $data);
+        $requestData['note_type'] = $noteService->setNoteType($requestData['type']);
 
-        $arrResult = array('data' => $arrResult);
+        $form = $this->createForm(NoteType::class, $note);
+        $form->submit($requestData);
 
-        return $arrResult;
+        if ($form->isValid())
+        {
+            $noteService->flushNote($form->getData());
+
+            return $form->getData();
+        }
+
+        throw new ValidatorException($form->getErrors(true));
     }
 
     /**
-     * @param int $id Note id
+     * @param Note $note
      * @param Request $request
      *
-     * @return array $arrResult with success flag
+     * @return boolean
+     *
+     * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function updateColorAction(Request $request, $id)
+    public function updateColorAction(Request $request, Note $note)
     {
         $requestData = $request->request->all();
-        $validateData = new RequestValidation($requestData);
-        $data = $validateData->options;
-
-        $noteService = $this->container->get('note_service');
-        $boolResult = $noteService->updateOneItem($id, $data['color'], 'color');
-        $arrResult = array('success' => $boolResult);
-
-        return $arrResult;
+        return $this->container->get('note_service')->updateOneItem($note, $requestData['color'], 'color');
     }
 
     /**
-     * @param int $id Note id
+     * @param Note $note
      * @param Request $request
      *
      * @return array $arrResult with success flag
+     *
+     * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function updateStatusAction(Request $request, $id)
+    public function updateStatusAction(Request $request, Note $note)
     {
         $requestData = $request->request->all();
-        $validateData = new RequestValidation($requestData);
-        $data = $validateData->options;
 
-        $noteService = $this->container->get('note_service');
-        $boolResult = $noteService->updateOneItem($id, $data['status'], 'status');
-        $arrResult = array('success' => $boolResult);
-
-        return $arrResult;
+        return $this->container->get('note_service')->updateOneItem($note, $requestData['status'], 'status');
     }
 
     /**
@@ -124,25 +127,20 @@ class NoteController extends Controller
 
     public function removeAllAction()
     {
-        $noteService = $this->container->get('note_service');
-        $arrResult = $noteService->removeAll();
-
-        return $arrResult;
+        return $this->container->get('note_service')->removeAll();
     }
 
     /**
-     * @param int $id Note id
+     * @param Note $note
      *
-     * @return array $arrResult with success flag
+     * @return boolean
+     *
+     * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function removeAction($id)
+    public function removeAction(Note $note)
     {
-        $noteService = $this->container->get('note_service');
-        $boolResult = $noteService->updateOneItem($id, 'removed', 'status');
-        $arrResult = array('success' => $boolResult);
-
-        return $arrResult;
+       return $this->container->get('note_service')->updateOneItem($note, 'removed', 'status');
     }
 
     /**
@@ -152,9 +150,6 @@ class NoteController extends Controller
 
     public function getTypesAction()
     {
-        $noteService = $this->container->get('note_service');
-        $arrResult = $noteService->getAllTypes();
-
-        return $arrResult;
+        return $this->container->get('note_service')->getAllTypes();
     }
 }

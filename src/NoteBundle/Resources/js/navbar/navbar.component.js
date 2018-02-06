@@ -7,13 +7,14 @@ angular.
     module('navbar').
     component('navbar', {
         templateUrl:'views/navbar/navbar.html',
-        require: {
-            appCtrl: '^app'
+        bindings: {
+            key: '<'
         },
         controller:['DataModel',
             function NavbarController(DataModel) {
 
                 const self = this;
+
                 self.activeTab = 'all-notes';
                 const promise = DataModel.loadTypeData();
                 promise.$promise.then(function (data) {
@@ -32,11 +33,11 @@ angular.
 
                     if (DataModel.filter() || (type === 'trash'))
                     {
-                        self.appCtrl.setNotesView(type);
+                        self.key.setNotesView(type);
                     }
                     else
                     {
-                        self.appCtrl.setNotesView('none');
+                        self.key.setNotesView('none');
                     }
 
                     self.activeTab = type;
@@ -48,7 +49,7 @@ angular.
                         tabName = self.items[type].name;
                     }
 
-                    self.appCtrl.setActiveTab(type, tabName);
+                    self.key.setActiveTab(type, tabName);
                 };
             }
         ]

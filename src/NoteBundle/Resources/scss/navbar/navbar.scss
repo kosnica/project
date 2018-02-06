@@ -25,8 +25,10 @@ a, a:hover, a:focus {
 }
 
 .sidebar.active {
-  margin-left: -250px;
-  color: #3e3e3e;
+
+  border-left: 5px solid #91aefb;
+  color: #5b5b5b;
+
 }
 
 .sidebar .sidebar-header {
@@ -55,8 +57,13 @@ a, a:hover, a:focus {
 }
 
 .sidebar ul li.active > a, a[aria-expanded="true"] {
-  color: #3e3e3e;
+
   background: #ffffff;
+  border-left: 5px solid #91aefb;
+  color: #5b5b5b;
+  height: 25px;
+  padding: 10px;
+
 }
 
 ul {
@@ -70,113 +77,6 @@ ul {
   }
 
 
-.note-contener {
-
-  background: #e7e7e7;
-  margin: 10px 10px 10px 10px;
-}
-
-.dns-margin-gap {
-  margin: 10px 10px 10px 10px;
-}
-
-.btn-circle {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 15px;
-}
-
-.colorpicker{
-  border: 1px solid #cacaca;
-  background-color:#ffffff;
-}
-
-.colorpicker-red{
-  background-color: #ffe0cc !important;
-}
-
-.colorpicker-blue{
-  background-color: #ced7ff !important;
-}
-
-.colorpicker-grey{
-  background-color: #f2f2f2 !important;
-}
-
-.notecolor-white{
-  background-color: #ffffff !important;
-}
-
-.notecolor-red{
-  background-color: #ffe0cc !important;
-}
-
-.notecolor-blue{
-  background-color: #ced7ff !important;
-}
-
-.notecolor-grey{
-  background-color: #f2f2f2 !important;
-}
-
-.dns-disable-all {
-  z-index: 1000;
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.dns-button {
-  position: absolute;
-  right: 30px;
-  top: 5px;
-  border-radius: 17px;
-}
-.dns-respons-cards {
-
-  float: left;
-  width: 100%;
-  border-radius: 0px;
-
-}
-
-@media (min-width: 414px) {
-  .dns-respons-cards {
-    float: left;
-    width: 50%;
-  }
-}
-
-@media (min-width: 845px) {
-  .dns-respons-cards {
-    float: left;
-    width: 25%;
-  }
-}
-
-@media (min-width: 1125px) {
-  .dns-respons-cards {
-    float: left;
-    width: 20%;
-  }
-}
-
-@media (min-width: 1405px) {
-  .dns-respons-cards {
-    float: left;
-    width: 16.65%;
-  }
-}
-
-@media (min-width: 1700px) {
-  .dns-respons-cards {
-    float: left;
-    width: 14.27%;
-  }
-}
 
 
 

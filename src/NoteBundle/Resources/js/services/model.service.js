@@ -53,28 +53,26 @@ factory('DataModel', ['NoteService', '$filter',
             return serviceData.navigation;
         };
 
-        serviceData.add = function(data)
+        serviceData.add = function(data, id)
         {
             NoteService.save(data).$promise.then(function(responseData) {
 
-                const dataObj = responseData.data;
-                if(Object.keys(dataObj).length > 0)
+                if(Object.keys(responseData).length > 0)
                 {
-                    serviceData.noteData.push(dataObj);
-                    originalData.push(dataObj);
+                    serviceData.noteData.push(responseData);
+                    originalData.push(responseData);
                 }
             });
 
         };
 
-        serviceData.update = function(data)
+        serviceData.update = function(data, id)
         {
-            NoteService.update({id:data.id}, data).$promise.then(function(responseData) {
+            NoteService.update({id:id}, data).$promise.then(function(responseData) {
 
-                const dataObj = responseData.data;
-                if(Object.keys(dataObj).length > 0)
+                if(Object.keys(responseData).length > 0)
                 {
-                    updateRecords(dataObj.id, dataObj);
+                    updateRecords(responseData.id, responseData);
                 }
             });
         };
@@ -83,7 +81,7 @@ factory('DataModel', ['NoteService', '$filter',
 
             NoteService.updateColor({id:id}, {color: color}).$promise.then(function(responseData) {
 
-                if (responseData.success)
+                if (responseData)
                 {
                     updateRecords(id, {color: color});
                 }
@@ -95,7 +93,7 @@ factory('DataModel', ['NoteService', '$filter',
 
             NoteService.updateStatus({id:id}, {status: status}).$promise.then(function(responseData) {
 
-                if (responseData.success)
+                if (responseData)
                 {
                     updateRecords(id, {status: status}, true);
                 }

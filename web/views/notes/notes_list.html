@@ -1,0 +1,30 @@
+<div class="col-md-12 note-contener">
+    <div ng-switch=$ctrl.key.notesView>
+        <div ng-switch-default>
+            <div class="col-md-12 kap dns-margin-gap" ng-switch=$ctrl.key.activeTab>
+                <div ng-switch-default>
+                    <p>NOTES</p>
+                    <div class="btn btn-success btn-round dns-button" ng-click="$ctrl.openModal()">New note</div>
+                </div>
+                <div ng-switch-when="trash">
+                    <p>Trash</p>
+                    <div class="btn btn-danger btn-round dns-button" ng-click="$ctrl.emptyTrash()">Clear Trash</div>
+                </div>
+            </div>
+            <div class="col-md-12 kap dns-margin-gap">
+                <div ng-repeat="item in $ctrl.items" >
+                    <note key="{objNote:item, active_tab: $ctrl.key.activeTab}"></note>
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="none">
+            <div class="col-md-12 kap dns-margin-gap">
+                <p>NOTES</p>
+                <div>
+                    <img src="Illustrations/notes-empty-state.svg" />
+                </div>
+                <div class="btn btn-success btn-round dns-button" ng-click="$ctrl.openModal()">{{$ctrl.key.buttonLabel}}</div>
+            </div>
+        </div>
+    </div>
+</div>

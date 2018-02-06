@@ -16,13 +16,13 @@ NoteBundle\Entity\Note:
         title:
             type: string
             length: 100
-        description:
+        note:
             type: text
         color:
             type: string
             length: 100
             options:
-                default: '#ffffff'
+                default: 'white'
         status:
             type: string
             length: 100
@@ -32,6 +32,6 @@ NoteBundle\Entity\Note:
             note_type:
                  targetEntity: NoteType
                  inversedBy: note
-                 joinColumn: 
+                 joinColumn:
                      name: type_id
                      referencedColumnName: id

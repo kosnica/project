@@ -41,11 +41,7 @@ class NoteService
         {
             foreach ($arrNotes as $objNote)
             {
-                $arrRecord = $this->setOneRecord($objNote);
-                if (count($arrRecord) > 0)
-                {
-                    $arrData[] = $arrRecord;
-                }
+                $arrData[] = $objNote;
             }
         }
 
@@ -53,84 +49,32 @@ class NoteService
     }
 
     /**
-     * @param int $id Note id
+     * @param object Note
      *
-     * @return array $arrData Array of note properties
      */
 
-    public function getOneNote($id)
+    public function flushNote($data)
     {
-        $objNote = $this->em->getRepository(Note::class)->find($id);
-        $arrData = array();
-
-        if (is_object($objNote))
-        {
-            $arrData = $this->setOneRecord($objNote);
-        }
-
-        return $arrData;
+        $this->em->persist($data);
+        $this->em->flush();
     }
 
     /**
-     * @param array $data Array of note properties
-     *
-     * @return array $arrData with new note properties
-     */
-
-    public function insertNote($data)
-    {
-        $intNoteId =  $this->setOneNote($data, new Note());
-        $objNote = $this->em->getRepository(Note::class)->find($intNoteId);
-        $arrData = $this->setOneRecord($objNote);
-        return $arrData;
-    }
-
-
-    /**
-     * @param int $id Note id
-     * @param array $data Array of note properties
-     *
-     * @return boolean true or false depending on whether the object exists
-
-     */
-
-    public function updateNote($id, $data)
-    {
-        $objNote = $this->em->getRepository(Note::class)->find($id);
-
-        if (is_object($objNote))
-        {
-            $intNoteId = $this->setOneNote($data, $objNote);
-            $arrData = $this->setOneRecord($objNote);
-            return $arrData;
-        }
-
-        return array();
-    }
-
-    /**
-     * @param int $id Note id
+     * @param object $objNote
      * @param string $value Attribute value
      * @param string $attribute Note entity attribute
      *
      * @return boolean true or false depending on whether the object exists
      */
 
-    public function updateOneItem($id, $value, $attribute)
+    public function updateOneItem($objNote, $value, $attribute)
     {
-        $objNote = $this->em->getRepository(Note::class)->find($id);
+        $strFunction = $this->arrFunctions[$attribute];
+        $objNote->$strFunction($value);
+        $this->em->persist($objNote);
+        $this->em->flush();
 
-        if (is_object($objNote))
-        {
-            $strFunction = $this->arrFunctions[$attribute];
-            $objNote->$strFunction($value);
-            $this->em->persist($objNote);
-            $this->em->flush();
-
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -159,6 +103,18 @@ class NoteService
     }
 
     /**
+     * @param string $strType
+     *
+     * @return object NoteType
+     */
+
+    public function setNoteType($strType)
+    {
+        $noteType = $this->em->getRepository(NoteType::class)->findOneByAlias($strType);
+        return $noteType;
+    }
+
+    /**
      *
      * @return array $arrData Array of notes types
      */
@@ -182,45 +138,5 @@ class NoteService
         }
 
         return $arrData;
-    }
-
-    /**
-     * @param object $objNote
-     *
-     * @return array $arrData Array of note properties
-     */
-
-    private function setOneRecord($objNote)
-    {
-        if (is_object($objNote))
-        {
-            $arrData = array('id'      => $objNote->getId(),
-                             'title'   => $objNote->getTitle(),
-                             'note'    => $objNote->getDescription(),
-                             'type'    => $objNote->getNoteType()->getAlias(),
-                             'color'   => $objNote->getColor(),
-                             'status'  => $objNote->getStatus());
-
-            return $arrData;
-        }
-
-        return array();
-    }
-
-    /**
-     * @param object $note
-     * @param array $data Array of note properties
-     *
-     */
-    private function setOneNote($data, $note)
-    {
-        $noteType = $this->em->getRepository(NoteType::class)->findOneByAlias($data['type']);
-        $note->setTitle($data['title']);
-        $note->setDescription($data['note']);
-        $note->setNoteType($noteType);
-        $this->em->persist($note);
-        $this->em->flush();
-
-        return $note->getId();
     }
 }
