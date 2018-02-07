@@ -12,6 +12,13 @@ input[type=url] {
   padding: 2px 5px;
   width: 250px; }
 
+textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 0.5px solid #e3e3e3;
+  padding: 2px 5px;
+  width: 250px; }
+
 .st-ib-margin-gap {
   margin: 5px 15px 15px 5px; }
 

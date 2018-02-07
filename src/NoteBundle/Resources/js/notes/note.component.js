@@ -31,6 +31,13 @@ component('note', {
              DataModel.updateStatus(intNoteID, status);
          };
 
+         self.show = false;
+
+         self.hover = function(boolShow)
+         {
+             self.show = boolShow;
+         }
+
          self.editModal = function (intNoteID){
 
              const oneNoteData = DataModel.getOne(intNoteID);

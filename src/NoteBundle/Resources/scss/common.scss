@@ -1,8 +1,17 @@
 
-.note-contener {
 
-  background: #e7e7e7;
+.note-list {
+
+  background: #f8f8f8;
   margin: 10px 10px 10px 10px;
+  float: left;
+  width: 100%;
+  border-radius: 0px;
+
+}
+
+.note-list p{
+  font-size: 25px;
 }
 
 .dns-margin-gap {
@@ -30,6 +39,12 @@
   right: 30px;
   top: 5px;
   border-radius: 17px;
+}
+
+.empty-notes{
+  margin-left: auto;
+  margin-right: auto;
+  width: 8em
 }
 
 .dns-respons-cards {

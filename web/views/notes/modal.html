@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="st-ib-margin-gap">
-                        <input type='text' ng-model="$ctrl.note" name="note" required="" placeholder="Take a note.."/>
+                        <textarea type='text' ng-model="$ctrl.note" name="note" required="" placeholder="Take a note.."/>
                         <div ng-show="form.$submitted || form.note.$touched">
                             <span ng-show="form.note.$error.required">This filed is required</span>
                         </div>

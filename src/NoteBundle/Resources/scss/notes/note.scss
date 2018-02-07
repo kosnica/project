@@ -42,14 +42,62 @@
 
 .text-padding{
 
-  padding-left:10% !important;
-  padding-right:10% !important;
+  margin: 10px 10px 10px 10px;
+  word-wrap: break-word;
 }
 
 .btn-text{
 
   font-size: 10px;
+  cursor: pointer;
+}
+
+.text-color{
+
+  color: #f81f1b;
+}
+
+.panel-heading{
+
+  font-size: 17px;
+}
+
+.link {
+
+  color: #4a2ff8;
+  margin: 10px 10px 10px 10px;
+  word-wrap: break-word;
+}
+
+.note-footer-images {
+
+  background: rgba(black, 0.5) !important;
+  color: #e9eaf0;
+  height: 30px;
 
 }
+
+.note-footer-images span{
+
+  padding-left: 10px;
+}
+
+.note-footer-notes{
+
+  padding: 10px;
+}
+
+.note-footer-link{
+  padding: 10px;
+}
+
+.panel-footer{
+
+  border: none;
+}
+
+
+
+
 
 
