@@ -72,7 +72,7 @@ class NoteService
      * @return object NoteType
      */
 
-    public function setNoteType($strType)
+    public function getNoteType($strType)
     {
         return $this->em->getRepository(NoteType::class)->findOneByAlias($strType);
     }

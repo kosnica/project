@@ -46,7 +46,7 @@ class NoteController extends Controller
     {
         $requestData = $request->request->all();
         $noteService = $this->container->get('note_service');
-        $requestData['note_type'] = $noteService->setNoteType($requestData['type']);
+        $requestData['note_type'] = $noteService->getNoteType($requestData['type']);
 
         $form = $this->createForm(NoteType::class);
         $form->submit($requestData);
@@ -74,8 +74,7 @@ class NoteController extends Controller
     {
         $requestData = $request->request->all();
         $noteService = $this->container->get('note_service');
-
-        $requestData['note_type'] = $noteService->setNoteType($requestData['type']);
+        $requestData['note_type'] = $noteService->getNoteType($requestData['type']);
 
         $form = $this->createForm(NoteType::class, $note);
         $form->submit($requestData);
