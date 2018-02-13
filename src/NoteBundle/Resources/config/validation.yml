@@ -8,4 +8,4 @@ NoteBundle\Entity\Note:
         note:
             - NotBlank:
         status:
-            - Choice: [regular, delited, removed]
+            - Choice: [regular, deleted, removed]

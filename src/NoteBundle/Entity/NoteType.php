@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * NoteType
  */
-class NoteType
+class NoteType implements \JsonSerializable
 {
     /**
      * @var int
@@ -116,5 +116,21 @@ class NoteType
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id'      => $this->getId(),
+            'alias'   => $this->getAlias(),
+            'name'    => $this->getName()
+        ];
     }
 }

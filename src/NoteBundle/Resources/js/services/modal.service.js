@@ -18,13 +18,16 @@ factory('Modal', ['$uibModal', 'DataModel',
             backdrop: 'static',
             controller: function ($uibModalInstance) {
 
-                this.noteType = modalData.type;
-                this.title = modalData.title;
-                this.note = modalData.note;
+                const recordData = modalData.data;
+                this.noteType = recordData.type;
+                this.title = recordData.title;
+                this.note = recordData.note;
                 this.navigation = DataModel.getNavigation();
 
                 this.getType = function(strType){
+
                     this.noteType = strType;
+                    recordData.type = strType;
                 };
 
                 this.closeModal = $uibModalInstance.close;
@@ -33,13 +36,10 @@ factory('Modal', ['$uibModal', 'DataModel',
 
                     if (form.$valid)
                     {
-                        const objNote = {
-                            type: this.noteType,
-                            title: this.title,
-                            note: this.note,
-                            status: 'regular'
-                        };
-                        DataModel[modalData.strFunction](objNote, modalData.id);
+                        recordData.title = this.title;
+                        recordData.note = this.note;
+
+                        DataModel[modalData.strFunction](recordData, modalData.id);
                         $uibModalInstance.close();
                     }
                 };

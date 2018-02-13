@@ -15,13 +15,6 @@ class NoteService
      */
     private $em;
 
-    /**
-     * @var array
-     */
-    private $arrFunctions = array('color' => 'setColor',
-                                  'status' => 'setStatus');
-
-
     public function __construct(EntityManager $entityManager)
     {
         $this->em = $entityManager;
@@ -34,18 +27,7 @@ class NoteService
 
     public function getAllNotes()
     {
-        $arrNotes = $this->em->getRepository(Note::class)->findAll();
-        $arrData = array();
-
-        if (count($arrNotes) > 0)
-        {
-            foreach ($arrNotes as $objNote)
-            {
-                $arrData[] = $objNote;
-            }
-        }
-
-        return $arrData;
+        return $this->em->getRepository(Note::class)->findAll();
     }
 
     /**
@@ -57,24 +39,6 @@ class NoteService
     {
         $this->em->persist($data);
         $this->em->flush();
-    }
-
-    /**
-     * @param object $objNote
-     * @param string $value Attribute value
-     * @param string $attribute Note entity attribute
-     *
-     * @return boolean true or false depending on whether the object exists
-     */
-
-    public function updateOneItem($objNote, $value, $attribute)
-    {
-        $strFunction = $this->arrFunctions[$attribute];
-        $objNote->$strFunction($value);
-        $this->em->persist($objNote);
-        $this->em->flush();
-
-        return true;
     }
 
     /**
@@ -110,8 +74,7 @@ class NoteService
 
     public function setNoteType($strType)
     {
-        $noteType = $this->em->getRepository(NoteType::class)->findOneByAlias($strType);
-        return $noteType;
+        return $this->em->getRepository(NoteType::class)->findOneByAlias($strType);
     }
 
     /**
@@ -121,22 +84,6 @@ class NoteService
 
     public function getAllTypes()
     {
-        $noteType = $this->em->getRepository(NoteType::class)->findAll();
-        $arrData = array();
-
-        if (count($noteType) > 0)
-        {
-            foreach ($noteType as $objType)
-            {
-                if (is_object($objType))
-                {
-                    $strType = $objType->getAlias();
-                    $arrData[$strType] = array('alias' => $strType,
-                                                'name'  => $objType->getName());
-                }
-            }
-        }
-
-        return $arrData;
+        return $this->em->getRepository(NoteType::class)->findAll();
     }
 }

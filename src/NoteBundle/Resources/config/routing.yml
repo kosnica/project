@@ -1,63 +1,49 @@
 notes:
     path:     /notes
     defaults: { _controller: NoteBundle:Note:index }
+    methods: [GET]
     requirements:
         _format: json
-        _method: GET
 
 get_note:
     path:     /notes/{id}
     defaults: { _controller: NoteBundle:Note:get }
+    methods: [GET]
     requirements:
         _format: json
-        _method: GET
 
 save_note:
     path:     /notes
     defaults: { _controller: NoteBundle:Note:save }
+    methods: [POST]
     requirements:
         _format: json
-        _method: POST
 
 update_note:
     path:     /notes/{id}
     defaults: { _controller: NoteBundle:Note:update }
+    methods: [PUT]
     requirements:
         _format: json
-        _method: PUT
 
-remove_note:
+partial_update:
     path:     /notes/{id}
-    defaults: { _controller: NoteBundle:Note:remove }
+    defaults: { _controller: NoteBundle:Note:partialUpdate }
+    methods: [PATCH]
     requirements:
         _format: json
-        _method: DELETE
 
 remove_all_notes:
     path:     /notes
     defaults: { _controller: NoteBundle:Note:removeAll }
+    methods: [DELETE]
     requirements:
         _format: json
-        _method: DELETE
-
-delete_note:
-    path:     /notes/{id}/updatestatus
-    defaults: { _controller: NoteBundle:Note:updateStatus }
-    requirements:
-        _format: json
-        _method: PUT
-
-color_note:
-    path:     /notes/{id}/updatecolor
-    defaults: { _controller: NoteBundle:Note:updateColor }
-    requirements:
-        _format: json
-        _method: PUT
 
 types:
     path:     /types
-    defaults: { _controller: NoteBundle:Note:getTypes }
+    defaults: { _controller: NoteBundle:NoteType:index }
+    methods: [GET]
     requirements:
         _format: json
-        _method: GET
 

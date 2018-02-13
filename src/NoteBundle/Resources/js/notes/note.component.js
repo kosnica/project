@@ -18,7 +18,7 @@ component('note', {
 
          self.changeColor = function(id, color) {
 
-             DataModel.updateColor(id, color);
+             DataModel.partialUpdate(id, {color: color});
          };
 
          self.removeNote = function(noteID){
@@ -28,7 +28,7 @@ component('note', {
 
          self.updateStatus = function(intNoteID, status){
 
-             DataModel.updateStatus(intNoteID, status);
+             DataModel.partialUpdate(intNoteID, {status: status});
          };
 
          self.show = false;
@@ -36,17 +36,22 @@ component('note', {
          self.hover = function(boolShow)
          {
              self.show = boolShow;
-         }
+         };
 
          self.editModal = function (intNoteID){
 
              const oneNoteData = DataModel.getOne(intNoteID);
-             const modalData = {id: intNoteID,
-                                type: oneNoteData.type,
-                                title: oneNoteData.title,
-                                note: oneNoteData.note,
-                                strFunction: 'update',
-                                active_tab: self.key.active_tab};
+             const data = {  type: oneNoteData.type,
+                             title: oneNoteData.title,
+                             note: oneNoteData.note,
+                             status: oneNoteData.status,
+                             color: oneNoteData.color};
+
+             const modalData = { data: data,
+                                 id: intNoteID,
+                                 strFunction: 'update',
+                                 active_tab: self.key.active_tab};
+
              Modal.openModal(modalData);
          };
 

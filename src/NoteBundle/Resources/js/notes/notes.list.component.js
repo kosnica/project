@@ -9,8 +9,8 @@ component('notes', {
     bindings: {
         key: '<'
     },
-    controller:['Modal', 'DataModel',
-        function NotesController(Modal, DataModel) {
+    controller:['Modal', 'DataModel', '$compile',
+        function NotesController(Modal, DataModel, $compile) {
 
             const self = this;
 
@@ -36,10 +36,13 @@ component('notes', {
                     strType = 'notes';
                 }
 
-                const modalData = {id: '',
-                                   type: strType,
-                                   title: '',
-                                   note: '',
+                const data = {  type: strType,
+                                title: '',
+                                note: '',
+                                status: 'regular',
+                                color: 'white'};
+
+                const modalData = {data: data,
                                    strFunction: 'add',
                                    active_tab: self.key.activeTab};
 
@@ -51,6 +54,7 @@ component('notes', {
 
                 DataModel.removeAll();
             };
+
         },
     ]
 });

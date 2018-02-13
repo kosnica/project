@@ -49,13 +49,14 @@ factory('NoteService', ['$resource',
                     collection: "notes"
                 }
             },
-            remove: {
-                method: 'DELETE',
+            partialUpdate: {
+                method: 'PATCH',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
                 params: {
-                    collection: "notes"
+                    collection: "notes",
                 }
             },
             removeAll: {
@@ -68,30 +69,9 @@ factory('NoteService', ['$resource',
                     collection: "notes"
                 }
             },
-            updateStatus: {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json'
-                },
-                params: {
-                    collection: "notes",
-                    action: "updatestatus"
-                }
-            },
-            updateColor: {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                params: {
-                    collection: "notes",
-                    action: "updatecolor"
-                }
-
-            },
             getTypes: {
                 method: 'GET',
+                isArray:true,
                 headers: {
                     'Accept': 'application/json'
                 },

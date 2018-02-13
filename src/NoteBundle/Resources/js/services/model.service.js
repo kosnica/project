@@ -14,7 +14,6 @@ factory('DataModel', ['NoteService', '$filter',
 
         serviceData.noteData = [];
         serviceData.navigation = [];
-        //serviceData.filters = {};
 
         serviceData.loadData = function(){
 
@@ -39,8 +38,7 @@ factory('DataModel', ['NoteService', '$filter',
 
         serviceData.getOne = function(id){
 
-            const oneItemData = getRecord(id);
-            return oneItemData;
+            return serviceData.noteData.find(item => item.id === id);
         };
 
         serviceData.setNavigation = function(data)
@@ -70,33 +68,35 @@ factory('DataModel', ['NoteService', '$filter',
         {
             NoteService.update({id:id}, data).$promise.then(function(responseData) {
 
+                console.log(responseData);
                 if(Object.keys(responseData).length > 0)
                 {
-                    updateRecords(responseData.id, responseData);
+                    updateRecords(id, responseData);
                 }
             });
         };
 
-        serviceData.updateColor = function(id, color) {
+        serviceData.partialUpdate = function(id, record) {
 
-            NoteService.updateColor({id:id}, {color: color}).$promise.then(function(responseData) {
+            NoteService.partialUpdate({id:id}, record).$promise.then(function(responseData) {
 
                 if (responseData)
                 {
-                    updateRecords(id, {color: color});
+                    updateRecords(id, record, true);
                 }
 
             });
         };
 
-        serviceData.updateStatus = function(id, status) {
+        serviceData.remove = function(id){
 
-            NoteService.updateStatus({id:id}, {status: status}).$promise.then(function(responseData) {
+            NoteService.partialUpdate({id:id}, {status: 'removed'}).$promise.then(function(responseData) {
 
                 if (responseData)
                 {
-                    updateRecords(id, {status: status}, true);
+                    removeData(id);
                 }
+
             });
         };
 
@@ -111,14 +111,6 @@ factory('DataModel', ['NoteService', '$filter',
             });
         };
 
-        serviceData.remove = function(id){
-
-            NoteService.remove({id: id}).$promise.then(function(responseData) {
-
-                removeData(id);
-            });
-        };
-
         serviceData.setFilter = function(data)
         {
             filterType = data.type;
@@ -129,14 +121,6 @@ factory('DataModel', ['NoteService', '$filter',
         {
             return filterData();
         };
-
-
-        function getRecord(id){
-
-            const oneItemData =  serviceData.noteData.find(item => item.id === id);
-
-            return oneItemData;
-        }
 
         function updateRecords(id, data, boolFilter = false)
         {

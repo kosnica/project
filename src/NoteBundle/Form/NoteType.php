@@ -20,6 +20,7 @@ class NoteType extends AbstractType
         $builder->add('type', TextType::class, array('mapped' => false));
         $builder->add('note_type', TextType::class);
         $builder->add('status', TextType::class);
+        $builder->add('color', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

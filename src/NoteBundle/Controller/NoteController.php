@@ -74,6 +74,7 @@ class NoteController extends Controller
     {
         $requestData = $request->request->all();
         $noteService = $this->container->get('note_service');
+
         $requestData['note_type'] = $noteService->setNoteType($requestData['type']);
 
         $form = $this->createForm(NoteType::class, $note);
@@ -82,7 +83,6 @@ class NoteController extends Controller
         if ($form->isValid())
         {
             $noteService->flushNote($form->getData());
-
             return $form->getData();
         }
 
@@ -98,26 +98,20 @@ class NoteController extends Controller
      * @ParamConverter("note", class="NoteBundle:Note")
      */
 
-    public function updateColorAction(Request $request, Note $note)
+    public function partialUpdateAction(Request $request, Note $note)
     {
         $requestData = $request->request->all();
-        return $this->container->get('note_service')->updateOneItem($note, $requestData['color'], 'color');
-    }
+        $form = $this->createForm(NoteType::class, $note);
+        $form->submit($requestData, false);
 
-    /**
-     * @param Note $note
-     * @param Request $request
-     *
-     * @return array $arrResult with success flag
-     *
-     * @ParamConverter("note", class="NoteBundle:Note")
-     */
+        if ($form->isValid())
+        {
+            $this->container->get('note_service')->flushNote($form->getData());
 
-    public function updateStatusAction(Request $request, Note $note)
-    {
-        $requestData = $request->request->all();
+            return true;
+        }
 
-        return $this->container->get('note_service')->updateOneItem($note, $requestData['status'], 'status');
+        throw new ValidatorException($form->getErrors(true));
     }
 
     /**
@@ -128,28 +122,5 @@ class NoteController extends Controller
     public function removeAllAction()
     {
         return $this->container->get('note_service')->removeAll();
-    }
-
-    /**
-     * @param Note $note
-     *
-     * @return boolean
-     *
-     * @ParamConverter("note", class="NoteBundle:Note")
-     */
-
-    public function removeAction(Note $note)
-    {
-       return $this->container->get('note_service')->updateOneItem($note, 'removed', 'status');
-    }
-
-    /**
-     *
-     * @return array $arrData Array of notes types
-     */
-
-    public function getTypesAction()
-    {
-        return $this->container->get('note_service')->getAllTypes();
     }
 }
