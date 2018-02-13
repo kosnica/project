@@ -67,8 +67,7 @@ factory('DataModel', ['NoteService', '$filter',
         serviceData.update = function(data, id)
         {
             NoteService.update({id:id}, data).$promise.then(function(responseData) {
-
-                console.log(responseData);
+                
                 if(Object.keys(responseData).length > 0)
                 {
                     updateRecords(id, responseData);
