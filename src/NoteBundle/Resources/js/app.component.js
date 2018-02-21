@@ -14,16 +14,14 @@ component('app', {
 
             self.notesView = "none";
             self.activeTab = "all-notes";
-            self.buttonLabel = "Add First Note";
 
             self.setNotesView = function(value){
 
                 self.notesView = value;
             };
 
-            self.setActiveTab = function(value, tabName = ""){
+            self.setActiveTab = function(value){
 
-                self.buttonLabel = "Add First " + tabName + " Note";
                 self.activeTab = value;
             };
 

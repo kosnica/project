@@ -42,14 +42,7 @@ angular.
 
                     self.activeTab = type;
 
-                    let tabName = "";
-
-                    if (self.items[type])
-                    {
-                        tabName = self.items[type].name;
-                    }
-
-                    self.key.setActiveTab(type, tabName);
+                    self.key.setActiveTab(type);
                 };
             }
         ]

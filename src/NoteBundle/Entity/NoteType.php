@@ -33,7 +33,7 @@ class NoteType implements \JsonSerializable
      * @var string
      */
     private $name;
-    
+
     public function __construct()
     {
         $this->note = new ArrayCollection();
