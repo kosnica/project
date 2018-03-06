@@ -5,6 +5,7 @@ namespace NoteBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,13 @@ class NoteType extends AbstractType
         $builder->add('note', TextareaType::class);
         $builder->add('type', TextType::class, array('mapped' => false));
         $builder->add('note_type', TextType::class);
+      /*  $builder->add('note_type', ChoiceType::class, [
+            'choices' => [
+                'notes'  => 'notes',
+                'images' => 'images',
+                'link'   => 'link',
+            ],
+        ]); */
         $builder->add('status', TextType::class);
         $builder->add('color', TextType::class);
     }
